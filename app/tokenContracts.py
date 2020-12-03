@@ -5,9 +5,15 @@ class TokenContracts(Contracts):
         self.printO("Contract Name is " + self.function.name().call())
 
 
+    def approve(self,address,amount):
+        self.printO("Contract approve:" + address + " amount=" + str(amount))
+        self.function.approve(address,amount).transact();
+
+
     def getOwnerBalance(self):
         balance = self.function.balanceOf(self.w3.eth.defaultAccount).call()
         self.printO("Contract Owner Balance has : " + str(balance))
+        return balance
 
 
     def testBalanceOf(self,address):
@@ -24,6 +30,17 @@ class TokenContracts(Contracts):
         else:
             self.printE("transfer result is : False")
         self.testBalanceOf(self.w3.eth.defaultAccount)
+
+
+    def testTransfer(self,wfrom,to,amount):
+        self.printO("transfer from " + str(wfrom) + " to "
+                    + str(to) + "amount:" + str(amount))
+        self.function.transfer(to,amount).transact();
+        balance = self.testBalanceOf(to)
+        if(balance == amount):
+            self.printS("transfer result is : True")
+        else:
+            self.printE("transfer result is : False")
 
 
     def testTransferZero(self):

@@ -21,7 +21,7 @@ class Contracts():
                  contractName,
                  contractFileName,
                  version="0.5.12",
-                 contractPath="/palette/contracts/"):
+                 contractPath="/contracts/"):
         self.printN("Project Strat")
         self.contractName = contractName
         self.contractFileName = contractFileName
@@ -35,6 +35,14 @@ class Contracts():
     def initAccounts(self):
         self.accountList = self.w3.eth.accounts;
         self.w3.eth.defaultAccount = self.accountList[0]
+
+
+    def setDefaultAccount(self,account):
+        self.w3.eth.defaultAccount = account
+
+
+    def getDefaultAccount(self):
+        return self.w3.eth.defaultAccount
 
 
     def readContract(self):
@@ -59,7 +67,7 @@ class Contracts():
     def deploy_contract(self):
         if(self.abi == "" or self.bin == ""):
             self.printN("Deploying Contract... " + self.contractFileName)
-            contract_info = self.getContract();
+            contract_info = self.getContract()
             self.abi = contract_info['abi']
             self.bin = contract_info['bin']
         tx_hash = self.w3.eth.contract(
