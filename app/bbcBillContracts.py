@@ -22,7 +22,7 @@ class BbcBillContracts(Contracts):
             bbcBranch,bbcAddress
             ).transact()
         except ValueError as e:
-            self.printE("transfer result is  " + e.args[0]['message'])
+            self.printE("transfer result is  " + e.args[0])
             return
         receipt = self.w3.eth.getTransactionReceipt(tx_hash)
         events = self.testEvents(receipt,"inFlow")
@@ -40,7 +40,7 @@ class BbcBillContracts(Contracts):
         try:
             tx_hash = self.function.retrace(txid,amount,walletAddress,contractAddr,fee).transact()
         except ValueError as e:
-            self.printE("transfer result is  " + e.args[0]['message'])
+            self.printE("transfer result is  " + e.args[0])
             return
         receipt = self.w3.eth.getTransactionReceipt(tx_hash)
         events = self.testEvents(receipt, "retrace")
@@ -57,7 +57,7 @@ class BbcBillContracts(Contracts):
             tx_hash = self.function.withDraw(txid,bbcBranch,walletAddress,contractAddr,
                                          amount,fee,rate).transact()
         except ValueError as e:
-            self.printE("transfer result is  " + e.args[0]['message'])
+            self.printE("transfer result is  " + e.args[0])
             return
         receipt = self.w3.eth.getTransactionReceipt(tx_hash)
         events = self.testEvents(receipt, "withDraw")
