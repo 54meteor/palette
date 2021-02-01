@@ -20,7 +20,7 @@ class Contracts():
     def __init__(self,
                  contractName,
                  contractFileName,
-                 version="0.5.12",
+                 version="0.5.16",
                  contractPath="/contracts/"):
         self.printN("Project Strat")
         self.contractName = contractName
@@ -56,7 +56,8 @@ class Contracts():
         return solcx.compile_source(
             self.readContract(),
             output_values=["abi", "bin"],
-            solc_version=self.version
+            solc_version=self.version,
+            optimize = True
         )
 
 
