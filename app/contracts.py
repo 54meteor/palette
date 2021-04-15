@@ -9,6 +9,7 @@ class Contracts():
     prefix = "<stdin>:"
     ROOT_PATH = os.path.split(os.path.abspath(__name__))[0]
     ZERO = "0x0000000000000000000000000000000000000000"
+    DECIMAL = 10 ** 18
     NOTICE = "[\033[32mNOTICE\033[0m]"
     ERROR = "[\033[31mERROR\033[0m]"
     WARNING = "[\033[33mWARNING\033[0m]"
@@ -65,6 +66,32 @@ class Contracts():
         return self.compile_source_file().get(self.prefix + self.contractName)
 
 
+    def deploy_contract1(self,m,n):
+        if(self.abi == "" or self.bin == ""):
+            self.printN("Deploying Contract... " + self.contractFileName)
+            # contract_info = self.compile_source_file1(self.CONTRACTS_PATH + self.contractFileName).get(self.prefix + self.contractName)
+            # contract_info = self.compile_source_file1(self.CONTRACTS_PATH + self.contractFileName)
+            # print(contract_info)
+            contract_info = self.getContract()
+            self.abi = contract_info['abi']
+            self.bin = contract_info['bin']
+        tx_hash = self.w3.eth.contract(
+            abi=self.abi,
+            bytecode=self.bin).constructor(m,n).transact()
+        self.contractAddr = self.w3.eth.getTransactionReceipt(tx_hash)['contractAddress']
+        self.printN("Deployde Contract... Address:" + self.contractAddr)
+        self.initContract()
+
+
+    def compile_source_file1(self,f):
+        self.printN("Compiling Contract... " + self.contractFileName)
+        return solcx.compile_files(
+            f,
+            output_values=["abi", "bin"],
+            solc_version=self.version,
+            optimize = True
+        )
+
     def deploy_contract(self):
         if(self.abi == "" or self.bin == ""):
             self.printN("Deploying Contract... " + self.contractFileName)
@@ -74,6 +101,19 @@ class Contracts():
         tx_hash = self.w3.eth.contract(
             abi=self.abi,
             bytecode=self.bin).constructor(self.accountList[0]).transact()
+        self.contractAddr = self.w3.eth.getTransactionReceipt(tx_hash)['contractAddress']
+        self.printN("Deployde Contract... Address:" + self.contractAddr)
+        self.initContract()
+
+    def deploy_contract_no_owner(self):
+        if (self.abi == "" or self.bin == ""):
+            self.printN("Deploying Contract... " + self.contractFileName)
+            contract_info = self.getContract()
+            self.abi = contract_info['abi']
+            self.bin = contract_info['bin']
+        tx_hash = self.w3.eth.contract(
+            abi=self.abi,
+            bytecode=self.bin).constructor().transact()
         self.contractAddr = self.w3.eth.getTransactionReceipt(tx_hash)['contractAddress']
         self.printN("Deployde Contract... Address:" + self.contractAddr)
         self.initContract()

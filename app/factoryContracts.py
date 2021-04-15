@@ -15,6 +15,14 @@ class FactoryContracts(Contracts):
         self.initContract()
 
 
+    def createPair(self,tokenA,tokenB):
+        self.printO("createPair start")
+        self.function.createPair(tokenA,tokenB).transact()
+
+
+    def getPair(self,tokenA,tokenB):
+        self.printO("getPair")
+        return self.function.getPair(tokenA,tokenB).call()
 
 
 
@@ -27,7 +35,7 @@ class FactoryContracts(Contracts):
     #     self.printO("Contract approve:" + address + " amount=" + str(amount))
     #     self.function.approve(address,amount).transact();
     #
-    #
+    #`
     # def getOwnerBalance(self):
     #     balance = self.function.balanceOf(self.w3.eth.defaultAccount).call()
     #     self.printO("Contract Owner Balance has : " + str(balance))

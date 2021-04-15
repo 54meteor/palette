@@ -5,10 +5,11 @@ import contracts
 
 
 def main(argv):
-    cts = contracts.Contracts("ESP","ArmorsToken.sol");
-    cts.deploy_contract()
-    print(cts.getContractName())
-    cts.testTransfer()
+    cts = contracts.Contracts("B","b.sol","0.8.0","/contracts/testContracts/")
+    cts.deploy_contract1("a","b")
+    print(cts.function.getM().call())
+    print(cts.function.getN().call())
+
 
 
 if __name__ == "__main__":

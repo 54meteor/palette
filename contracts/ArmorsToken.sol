@@ -418,7 +418,7 @@ contract ArmorsToken is ERC20Detailed, Ownable, ERC20PausableBurnableFreezable {
 
     event PaymentReceived(address from, uint256 amount);
 
-    uint private INITIAL_SUPPLY = 21000000000e18;
+    uint private INITIAL_SUPPLY = 999999999e18;
 
     constructor (address account) public ERC20Detailed("Armors Token", "ARM", 18)
     {
